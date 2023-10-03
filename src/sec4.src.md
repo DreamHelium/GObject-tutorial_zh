@@ -1,43 +1,43 @@
-# Signals
+# 信号
 
-## Signals
+## 信号
 
-Signals provide a means of communication between objects.
-Signals are emitted when something happens or completes.
+信号提供一种在对象间通讯的方法。
+信号在某事发生或者完成时发出。
 
-The steps to program a signal is shown below. 
+编程出一个信号的步骤在下述描述。
 
-1. Register a signal.
-A signal belongs to an object, so the registration is done in the class initialization function of the object.
-2. Write a signal handler.
-A signal handler is a function that is invoked when the signal is emitted.
-3. Connect the signal and handler.
-Signals are connected to handlers with `g_connect_signal` or its family functions.
-4. Emit the signal.
+1. 注册一个信号。
+一个信号属于一个对象，所以这个注册是在对象的类初始化的函数中完成的。
+2. 写一个信号处理者。
+一个信号处理者是一个在信号发出时被调用的函数。
+3. 将信号和处理者连接。
+信号使用`g_connect_signal`或其相关函数被连接到处理者。
+4. 发出信号。
 
-Step one and Four are done on the object to which the signal belongs.
-Step three is usually done outside the object.
+步骤1和4在属于信号的对象中完成。
+步骤3通常在对象外完成。
 
-The process of signals is complicated and it takes long to explain all the features.
-The contents of this section is limited to the minimum things to write a simple signal and not necessarily accurate.
-If you need an accurate information, refer to GObject API reference.
-There are four parts which describe signals.
+这些信号相关的过程很复杂并且它需要很久去解释所有的功能。
+受限于这节内容，只能完成最少量的事去写一个简单的信号并且不必要很准确。
+如果你需要一个准确的信息，参考GObject API手册。
+有四个部分介绍了信号。
 
 - [Type System Concepts -- signals](https://docs.gtk.org/gobject/concepts.html#signals)
 - [Funcions (g\_signal\_XXX series)](https://docs.gtk.org/gobject/#functions)
 - [Funcions Macros (g\_signal\_XXX series)](https://docs.gtk.org/gobject/#function_macros)
 - [GObject Tutorial -- How to create and use signals](https://docs.gtk.org/gobject/tutorial.html#how-to-create-and-use-signals)
 
-## Signal registration
+## 信号注册
 
-An example in this section is a signal emitted when division-by-zero happens.
-First, we need to determine the name of the signal.
-Signal name consists of letters, digits, dash (`-`) and underscore (`_`).
-The first character of the name must be a letter.
-So, a string "div-by-zero" is appropriate for the signal name.
+在这节的一个例子是一个当除0发生时发出的信号。
+首先，我们需要确定信号的名称。
+信号名称包含字母，数字，划线（`-`）和下划线（`_`）。
+名字的第一个字符必须是一个字母。
+所以，字符串"div-by-zero"对于信号的名称很合适。
 
-There are four functions to register a signal.
-We will use [`g_signal_new`](https://docs.gtk.org/gobject/func.signal_new.html) for "div-by-zero" signal.
+有四个函数用于注册信号。
+我们将使用[`g_signal_new`](https://docs.gtk.org/gobject/func.signal_new.html)注册"div-by-zero"信号。
 
 ~~~C
 guint
@@ -53,98 +53,99 @@ g_signal_new (const gchar *signal_name,
               ...);
 ~~~
 
-It needs a lot to explain each parameter.
-At present I just show you `g_signal_new` function call extracted from `tdouble.c`.
+要解释每个参数需要费很大劲。
+现在我只展示给你`g_signal_new`函数调用，从`tdouble.c`中调出的。
+（译者注：译者对里面的注释也进行了翻译）
 
 ~~~C
 t_double_signal =
 g_signal_new ("div-by-zero",
               G_TYPE_FROM_CLASS (class),
               G_SIGNAL_RUN_LAST | G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS,
-              0 /* class offset.Subclass cannot override the class handler (default handler). */,
-              NULL /* accumulator */,
-              NULL /* accumulator data */,
-              NULL /* C marshaller. g_cclosure_marshal_generic() will be used */,
-              G_TYPE_NONE /* return_type */,
+              0 /* 类偏移。子类不能覆盖类处理者(默认处理者)。 */,
+              NULL /* 累加器 */,
+              NULL /* 累加器数据 */,
+              NULL /* C装配器。g_cclosure_marshal_generic()将被使用 */,
+              G_TYPE_NONE /* 返回值类型 */,
               0     /* n_params */
               );
 ~~~
 
-- `t_double_signal` is a static guint variable.
-The type guint is the same as unsigned int.
-It is set to the signal id returned by the function `g_signal_new`.
-- The second parameter is the type (GType) of the object the signal belongs to.
-`G_TYPE_FROM_CLASS (class)` returns the type corresponds to the class (`class` is a pointer to the class of the object).
-- The third parameter is a signal flag.
-Lots of pages are necessary to explain this flag.
-So, I want leave them out now.
-The argument above can be used in many cases.
-The definition is described in the [GObject API Reference -- SignalFlags](https://docs.gtk.org/gobject/flags.SignalFlags.html).
-- The return type is G_TYPE_NONE which means no value is returned by the signal handler.
-- `n_params` is a number of parameters.
-This signal doesn't have parameters, so it is zero.
+- `t_double_signal`是一个静态guint变量。
+guint类和unsigned int是一样的。
+它被设定为由`g_signal_new`函数返回的信号id。
+- 第二个参数是属于这个信号的对象的类型 (GType) 。
+`G_TYPE_FROM_CLASS (class)`返回对应类的类型(`class`是指向对象的类的指针)。
+- 第三个参数是一个信号标识。
+要解释这个标识需要花费大量篇幅。
+所以，我想在这列出来。
+上面的参数可以用在很多场景中。
+定义在[GObject API Reference -- SignalFlags](https://docs.gtk.org/gobject/flags.SignalFlags.html)中有描述。
+- 返回类型是G_TYPE_NONE意味着没有值由信号处理者返回。
+- `n_params`是参数数。
+这个信号不含有参数，所以它是0。
 
-This function is located in the class initialization function (`t_double_class_init`).
+这个函数位于类初始化函数中 (`t_double_class_init`)。
 
-You can use other functions such as `g_signal_newv`.
-See [GObject API Reference](https://docs.gtk.org/gobject/func.signal_newv.html) for details.
+你可以使用其他函数例如`g_signal_newv`。
+更多细节参阅[GObject API Reference](https://docs.gtk.org/gobject/func.signal_newv.html)。
 
-## Signal handler
+## 信号处理者
 
-Signal handler is a function that is called when the signal is emitted.
-The handler has two parameters.
+信号处理者是当信号发出时调用的函数。
+处理者有2个参数。
 
-- The instance to which the signal belongs
-- A pointer to a user data which is given in the signal connection.
+- 信号所属者的实例
+- 在信号连接中提供的用户数据的指针。
 
-The "div-by-zero" signal doesn't need user data.
+"div-by-zero"信号不需要用户数据。
 
 ~~~C
 void div_by_zero_cb (TDouble *self, gpointer user_data) { ... ... ...}
 ~~~
 
-The first argument `self` is the instance on which the signal is emitted.
-You can leave out the second parameter.
+第一个参数`self`是发出信号的实例。
+你可以省略第二个参数。
 
 ~~~C
 void div_by_zero_cb (TDouble *self) { ... ... ...}
 ~~~
 
-If a signal has parameters, the parameters are between the instance and the user data.
-For example, the handler of "window-added" signal on GtkApplication is:
+如果一个信号有参数，参数在实例和用户数据之间。
+例如，在GtkApplication的"window-added"信号的处理者是：
 
 ~~~C
 void window_added (GtkApplication* self, GtkWindow* window, gpointer user_data);
 ~~~
 
-The second argument `window` is the parameter of the signal.
-The "window-added" signal is emitted when a new window is added to the application.
-The parameter `window` points a newly added window.
-See [GTK API reference](https://docs.gtk.org/gtk4/signal.Application.window-added.html) for further information.
+第二个参数`window`是信号的参数。
+"window-added"信号在有新窗口加入应用时发出。
+参数`window`指向一个新添加的窗口。
+更多信息参见[GTK API reference](https://docs.gtk.org/gtk4/signal.Application.window-added.html)。
 
-The handler of "div-by-zero" signal just shows an error message.
+"div-by-zero"信号的处理者只是展示一个错误信息。
 
 ~~~C
 static void
 div_by_zero_cb (TDouble *self, gpointer user_data) {
-  g_print ("\nError: division by zero.\n\n");
+  g_print ("\n错误：被0除\n\n");
 }
 ~~~
 
-## Signal connection
+## 信号连接
 
-A signal and a handler are connected with the function [`g_signal_connect`](https://docs.gtk.org/gobject/func.signal_connect.html).
+一个信号和一个处理者使用[`g_signal_connect`](https://docs.gtk.org/gobject/func.signal_connect.html)函数连接。
 
 ~~~C
 g_signal_connect (self, "div-by-zero", G_CALLBACK (div_by_zero_cb), NULL);
 ~~~
 
-- `self` is an instance the signal belongs to.
-- The second argument is the signal name.
-- The third argument is the signal handler.
-It must be casted by `G_CALLBACK`.
-- The last argument is an user data.
-The signal doesn't need a user data, so NULL is assigned.
+- `self`是一个信号属有者的实例。
+- 第二个参数是信号名。
+- 第三个参数是信号处理者。
+它必须由`G_CALLBACK`包裹。
+- 最后一个参数是一个用户数据。
+这个信号不需要一个用户数据，所以分配NULL。
 
 ## Signal emission
 

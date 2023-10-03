@@ -1,9 +1,9 @@
-The GitHub page of this tutorial is available.
-Click [here](https://toshiocp.github.io/Gobject-tutorial/).
+这个教程的GitHub页面可访问。
+点击 [这里](https://toshiocp.github.io/Gobject-tutorial/).
 
-#### About this tutorial
+#### 关于此教程
 
-GObject is the base system for the GTK library, the current version of which is four.
+GObject是给GTK库的基础系统，GTK库现在的版本为4。
 GTK provides GUI on Linux and is used by GNOME desktop system and many applications.
 See [GTK 4 tutorial](https://github.com/ToshioCP/Gtk4-tutorial).
 One of the problem to understand GTK 4 is the difficulty of the GObject.
