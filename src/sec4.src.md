@@ -147,10 +147,10 @@ g_signal_connect (self, "div-by-zero", G_CALLBACK (div_by_zero_cb), NULL);
 - 最后一个参数是一个用户数据。
 这个信号不需要一个用户数据，所以分配NULL。
 
-## Signal emission
+## 信号释放
 
-Signals are emitted on the object.
-The following is a part of `tdouble.c`.
+信号在对象上释放。
+接下来是`tdouble.c`的一部分。
 
 ~~~C
 TDouble *
@@ -166,22 +166,22 @@ t_double_div (TDouble *self, TDouble *other) {
 }
 ~~~
 
-If the divisor is zero, the signal is emitted.
-[`g_signal_emit`](https://docs.gtk.org/gobject/func.signal_emit.html) has three parameters.
+如果除数是0，将会释放信号。
+[`g_signal_emit`](https://docs.gtk.org/gobject/func.signal_emit.html)含有三个参数。
 
-- The first parameter is the instance that emits the signal.
-- The second parameter is the signal id.
-Signal id is the value returned by the function `g_signal_new`.
-- The third parameter is a detail.
-"div-by-zero" signal doesn't have a detail, so the argument is zero.
-Detail isn't explained in this section but usually you can put zero as a third argument.
-If you want to know the details, refer to [GObject API Reference -- Signal Detail](https://docs.gtk.org/gobject/concepts.html#the-detail-argument).
+- 第一个参数是释放信号的实例。
+- 第二个参数是信号id。
+信号id是函数`g_signal_new`的返回值。
+- 第三个参数是一个细节。
+"div-by-zero"信号不包含细节，所以这个参数是0。
+细节不在这个章节阐述但是通常你可以使用0作为第三个参数。
+如果你想知道更多细节，参考[GObject API Reference -- Signal Detail](https://docs.gtk.org/gobject/concepts.html#the-detail-argument)。
 
-If a signal has parameters, they are fourth and subsequent arguments.
+如果一个信号含有参数，它们是第四个和随后的参数。
 
-## Example
+## 例子
 
-A sample program is in [src/tdouble3](tdouble3).
+一个示例程序在[src/tdouble3](tdouble3)中。
 
 tdouble.h
 
