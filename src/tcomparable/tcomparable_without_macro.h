@@ -4,11 +4,12 @@
 
 #define T_TYPE_COMPARABLE  (t_comparable_get_type ())
 /*G_DECLARE_INTERFACE (TComparable, t_comparable, T, COMPARABLE, GObject)*/
-GType *t_comparable_get_type (void);
+GType t_comparable_get_type (void);
+typedef struct _TComparable TComparable;
 typedef struct _TComparableInterface TComparableInterface;
 #define T_COMPARABLE(instance)           (G_TYPE_CHECK_INSTANCE_CAST(instance, T_TYPE_COMPARABLE, TComparable))
 #define T_IS_COMPARABLE(instance)        (G_TYPE_CHECK_INSTANCE_TYPE(instance, T_TYPE_COMPARABLE))
-#define T_COMPARABLE_GET_IFACE(instance) (G_TYPE_INSTANCE_GET_INTERFACE(instance, T_TYPE_COMPARABLE, TComparable))
+#define T_COMPARABLE_GET_IFACE(instance) (G_TYPE_INSTANCE_GET_INTERFACE((instance), T_TYPE_COMPARABLE, TComparableInterface))  
 
 struct _TComparableInterface {
   GTypeInterface parent;
