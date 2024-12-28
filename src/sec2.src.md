@@ -92,33 +92,33 @@ $ meson setup _build
 $ ninja -C _build
 ~~~
 
-One of the programs is `example1.c`.
-Its code is as follows.
+其中的一个程序是`example1.c`。
+其代码如下。
 
 @@@include
 misc/example1.c
 @@@
 
-- 5-6: `instance1` and `instance2` are pointers that points GObject instances.
-`class1` and `class2` points a class of the instances.
-- 8-11: A function `g_object_new` creates a GObject instance.
-GObject instance is a chunk of memory which has GObject structure (`struct _GObject`).
-The argument `G_TYPE_OBJECT` is the type of GObject.
-This type is different from C language type like `char`  or `int`.
-There is *Type System* which is a base system of GObject system.
-Every data type such as GObject must be registered to the type system.
-The type system has series of functions for the registration.
-If one of the functions is called, then the type system determines `GType` type value for the object and returns it to the caller.
-`GType` is an unsigned long integer on my computer but it depends on the hardware.
-`g_object_new` allocates GObject-sized memory and returns the pointer to the top address of the memory.
-After the creation, this program displays the addresses of instances.
-- 13-16: A macro `G_OBJECT_GET_CLASS` returns the pointer to the class of the argument.
-Therefore, `class1` points the class of `instance1` and `class2` points the class of `instance2` respectively.
-The addresses of the two classes are displayed.
-- 18-19: `g_object_unref` will be explained in the next subsection.
-It destroys the instances and the memory is freed.
+- 5-6: `instance1`和`instance2`都是指向GObject实例的指针。
+`class1`和`class2`指向这些实例的类。
+- 8-11: 函数`g_object_new`创建一个GObject实例。
+GObject实例是拥有GObject结构(`struct _GObject`)的一块内存。
+参数`G_TYPE_OBJECT`是GObject的类型。
+这个类型和一般的C语言类型如`char`或`int`不同。
+GObject自有一套基础的*类型系统*。
+每个类型比如GObject必须注册到这个类型系统中。
+类型系统有一系列的函数用于注册类型。
+如果其中一个函数被调用，类型系统决定对象`GType`的类型值然后返回给调用者。
+`GType`在原作者的计算机上是一个无符号整数但是它与硬件相关。
+`g_object_new`分配GObject般大小的内存然后将项层地址的指针返回。
+在创建后，本程序展示实例的地址。
+- 13-16: 宏`G_OBJECT_GET_CLASS`返回参数的类的指针。
+因此，`class1`指向`instance1`的类，`class2`指向`instance2`的类。
+本程序展示两个类的地址。
+- 18-19: `g_object_unref`将在下个子部分中介绍。
+它析构实例，释放内存。
 
-Now, execute it.
+现在，运行这个程序。
 
 ~~~
 $ cd src/misc; _build/example1
@@ -128,12 +128,12 @@ The address of the class of instance1 is 0x55895eaf7880
 The address of the class of instance2 is 0x55895eaf7880
 ~~~
 
-The locations of two instances `instance1` and `instance2` are different.
-Each instance has its own memory.
-The locations of two classes `class1` and `class2` are the same.
-Two GObject instances share the same class.
+两个实例`instance1`和`instance2`的地址不一样。
+每个实例有着自己的内存。
+两个类`class1`和`class2`的地址一样。
+两个GObject实例共享同一个类。
 
-![Class and Instance](../image/class_instance.png){width=10cm height=7.5cm}
+![类和实例](../image/class_instance.png){width=10cm height=7.5cm}
 
 ## 引用计数
 
@@ -164,13 +164,13 @@ B使用`g_object_unref`并且减少了1点引用计数。
 G自己开始了终结化进程。
 G消失然后这个内存被释放。
 
-A program `example2.c` is based on the scenario above.
+程序`example2.c`基于以上的情景。
 
 @@@include
 misc/example2.c
 @@@
 
-Now execute it.
+现在执行一下。
 
 ~~~
 $ cd src/misc; _build/example2
@@ -187,16 +187,16 @@ The instance memories are possibly returned to the system.
 Therefore, the access to the same address may cause a segmentation error.
 ~~~
 
-`example2` shows:
+`example2`展示了：
 
-- `g_object_new` creates a new GObject instance and sets its reference count to 1.
-- `g_object_ref` increases the reference count by 1.
-- `g_object_unref` decreases the reference count by 1.
-If the reference count drops to zero, the instance destroys itself.
+- `g_object_new`创建了一个GObject实例并且将其引用计数设为1.
+- `g_object_ref`增加了1个引用计数。
+- `g_object_unref`减少了1个引用计数。
+如果引用计数减少到0, 实例自己析构。
 
-## 初始化和销毁进程
+## 初始化和析构进程
 
-真正的GObject初始化和销毁过程非常复杂。
+真正的GObject初始化和析构过程非常复杂。
 接下来是没有讲述细节的简化描述。
 
 初始化
@@ -215,9 +215,9 @@ If the reference count drops to zero, the instance destroys itself.
 在第二次和后续的`g_object_new`调用中，它只执行两个步骤：(1) GObject结构的内存分配 (2) 初始化内存。
 `g_object_new`返回指向这个实例的指针（分配给GObject结构的内存）。
 
-销毁
+析构
 
-1. 破坏GObject实例。实例的内存被释放。
+1. 析构GObject实例。实例的内存被释放。
 
 GObject类型是一个静态类型。
 静态类型永不破坏它的类。

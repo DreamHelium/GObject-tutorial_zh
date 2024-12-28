@@ -1,24 +1,20 @@
-# Prerequisites and License
+# 前言和许可
 
-## Prerequisites
+## 前言
 
-### Tutorial document
+### 教程文档
 
-This tutorial is about GObject libraries.
-It is originally used on Linux with C compiler, but now it is used more widely, on windows and macOS, with Vala, python and so on.
-However, this tutorial describes only _C programs on Linux_.
+本教程是关于GObject库的。
+它原本是用于Linux上的C编译器的，但是它现在用途更广泛，还在windows和macOS，以及Vala, python等语言上所有应用。
+但是，本教程只描述_Linux上的C程序_。
 
-If you want to try to compile the examples in the tutorial, you need:
+虽然没有充分测试，但是以下环境满足的情况下应该能成功编译。（**原文只针对Linux平台，但是译者的其他程序在Windows上功能仍然正常，所以以下条件会比原文宽泛**）
 
-- PC with Linux distribution like Ubuntu, Debian and so on.
-- Gcc
-- GLib. The version at the time this document is described is 2.76.1.
-Some example program needs version 2.74 or higher.
-But they work on the older version if you replace the new function or macro with the old one.
+- 通用计算机平台（~借助Termux，手机其实也可以~）
+- C编译器
+- GLib，尽量使用2.74或更高版本
 - pkg-config
-- meson and ninja
-
-Common Linux distributions has GLib, which is enough for you to compile the examples in this repository.
+- meson和ninja
 
 ### Tools to make GFM, HTML and PDF files
 
@@ -40,6 +36,7 @@ Ruby package includes Rake gem as a standard library so you don't need to instal
 ## License
 
 Copyright (C) 2021-2022  ToshioCP (Toshio Sekiya)
+Copyright (C) 2024 Dream_Helium (Chinese Translator)
 
 GObject tutorial repository contains the tutorial document and software such as converters, generators and controllers.
 All of them make up the 'GObject tutorial' package.

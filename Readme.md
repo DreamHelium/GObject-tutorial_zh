@@ -1,22 +1,22 @@
-The GitHub page of this tutorial is available.
-Click [here](https://toshiocp.github.io/Gobject-tutorial/).
+这个教程的GitHub页面可访问。
+点击 [这里](https://toshiocp.github.io/Gobject-tutorial/).
 
-#### About this tutorial
+#### 关于此教程
 
-GObject is the base system for the GTK library, the current version of which is four.
-GTK provides GUI on Linux and is used by GNOME desktop system and many applications.
-See [GTK 4 tutorial](https://github.com/ToshioCP/Gtk4-tutorial).
-One of the problem to understand GTK 4 is the difficulty of the GObject.
-This tutorial is useful for those who learns GTK 4.
-And the readers of this tutorial should read GTK 4 tutorial because GTK is the only application of GObject so far.
+GObject是给GTK库的基础系统，GTK库现在的版本为4。
+GTK提供Linux上的图形界面并且为GNOME桌面环境和许多程序所用。
+参见[GTK 4 教程](https://github.com/ToshioCP/Gtk4-tutorial)。
+理解GTK 4的一大难题是GObject的复杂程度。
+这个教程对想要学习GTK 4的人有用。
+本教程的读者也应读GTK 4教程因为GTK是迄今为止唯一的GObject应用（*有的库例如json-glib和语言vala就用到了GObject的核心内容，但是理解GTK确实是理解GObject的一个很好的手段*）。
 
-[GObject API Reference](https://docs.gtk.org/gobject/) offers everything necessary for GObject.
-The contents of this tutorial are not beyond the documentation.
-It just shows examples and how to write GObject programs.
-But I believe it is useful for the beginners who feels difficulty to learn the GObject system.
-Readers should refer to the GObject documentation when learning this tutorial.
+[GObject API参考](https://docs.gtk.org/gobject)讲解了所有GObject的必要知识。
+本教程的内容没有超过文档的范围。
+它只展示了例子，如何编写GObject程序。
+但是我相信本教程对学习GObject系统感到困惑的初学者很有用。
+读者学习本教程时仍需参考GObject文档。
 
-#### Generating GFM, HTML and PDF
+#### Generating GFM, HTML and PDF (*译者不想翻译下面部分*)
 
 The table of contents are at the end of this file and you can see all the tutorials through the link.
 However, you can make GFM, HTML or PDF by the following steps.
@@ -42,10 +42,10 @@ Then GFM and HTML files are automatically updated.
 
 ## Table of contents
 
-1. [Prerequisites and License](gfm/sec1.md)
+1. [前言和许可](gfm/sec1.md)
 1. [GObject](gfm/sec2.md)
 1. [Type system and registration process](gfm/sec3.md)
-1. [Signals](gfm/sec4.md)
+1. [信号](gfm/sec4.md)
 1. [Properties](gfm/sec5.md)
 1. [Derivable type and abstract type](gfm/sec6.md)
 1. [Derivable and non-abstract type](gfm/sec7.md)
